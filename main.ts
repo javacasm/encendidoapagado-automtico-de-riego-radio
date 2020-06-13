@@ -75,10 +75,13 @@ input.onButtonPressed(Button.A, function () {
 function MedidaSensores () {
     NivelDeposito = pins.analogReadPin(AnalogPin.P2)
     serial.writeValue("nivelDeposito", NivelDeposito)
+    radio.sendValue("nivelDeposito", NivelDeposito)
     ValorSensorLluvia = pins.analogReadPin(AnalogPin.P1)
     serial.writeValue("SensorLluvia", ValorSensorLluvia)
+    radio.sendValue("SensorLluvia", ValorSensorLluvia)
     HumedadSuelo = 1023 - pins.analogReadPin(AnalogPin.P0)
     serial.writeValue("HumedadSuelo", HumedadSuelo)
+    radio.sendValue("HumedadSuelo", HumedadSuelo)
 }
 input.onButtonPressed(Button.B, function () {
     ApagarRiego()
@@ -102,6 +105,7 @@ serial.redirectToUSB()
 AlarmaNivelAgua = 400
 HumedadParaRiego = 500
 SensorLluviaMojado = 800
+radio.setGroup(7)
 basic.forever(function () {
     MedidaSensores()
     MostrarNivelAgua()
